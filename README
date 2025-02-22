@@ -1,3 +1,7 @@
 ### Storage
 
 A storage interface in Golang
+
+The following storage options are available : 
+- Local
+- S3
