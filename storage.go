@@ -13,7 +13,7 @@ type StorageInterface interface {
 	MakeDir(dir string, path string) error
 
 	// Write file
-	Write(key string, content string) (io.WriteCloser, error)
+	Write(key string, content string) error
 
 	// Read file
 	Read(key string) (io.ReadCloser, error)
@@ -38,6 +38,8 @@ func CreateStorage(storageType string, path string) (StorageInterface, error) {
 	switch storageType {
 	case "local":
 		return newLocalStorage(path), nil
+	case "s3":
+		return newS3Storage(path)
 	default:
 		return nil, fmt.Errorf("Wrong storage type passed")
 	}

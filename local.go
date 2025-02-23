@@ -25,23 +25,23 @@ func (l *LocalStorage) MakeDir(dir string, path string) error {
 	return os.MkdirAll(fullPath, 0755)
 }
 
-func (l *LocalStorage) Write(key string, content string) (io.WriteCloser, error) {
+func (l *LocalStorage) Write(key string, content string) error {
 	fullPath := filepath.Join(l.Storage.Path, key)
 	file, err := os.OpenFile(fullPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if content != "" {
 		_, err := file.WriteString(content)
 		file.Close()
 		if err != nil {
-			return nil, err
+			return err
 		}
-		return nil, nil
+		return nil
 	}
 
-	return file, nil
+	return nil
 }
 
 func (l *LocalStorage) Read(key string) (io.ReadCloser, error) {
